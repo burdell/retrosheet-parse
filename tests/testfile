@@ -1,0 +1,8 @@
+id,ANA201904040
+version,2
+info,visteam,TEX
+start,choos001,"Shin-Soo Choo",0,1,9
+start,harvm001,"Matt Harvey",1,0,1
+play,1,0,choos001,22,FBBCH,HP
+com,"On-field Delay"
+data,er,volqe001,2
