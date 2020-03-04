@@ -2,17 +2,29 @@ import { parseFile, parseGames } from '../lib/index'
 
 describe('lib', () => {
   it('parses a raw file', async () => {
-    const result = await parseFile('./tests/testfile')
+    const result = await parseFile('./tests/testfile2')
 
     expect(result).toEqual([
-      'id,ANA201904040',
-      'version,2',
-      'info,visteam,TEX',
-      'start,choos001,"Shin-Soo Choo",0,1,9',
-      'start,harvm001,"Matt Harvey",1,0,1',
-      'play,1,0,choos001,22,FBBCH,HP',
-      'com,"On-field Delay"',
-      'data,er,volqe001,2'
+      [
+        'id,ANA201904040',
+        'version,2',
+        'info,visteam,TEX',
+        'start,choos001,"Shin-Soo Choo",0,1,9',
+        'start,harvm001,"Matt Harvey",1,0,1',
+        'play,1,0,choos001,22,FBBCH,HP',
+        'com,"On-field Delay"',
+        'data,er,volqe001,2'
+      ],
+      [
+        'id,ANA201904040',
+        'version,2',
+        'info,visteam,TEX',
+        'start,choos001,"Shin-Soo Choo",0,1,9',
+        'start,harvm001,"Matt Harvey",1,0,1',
+        'play,1,0,choos001,22,FBBCH,HP',
+        'com,"On-field Delay"',
+        'data,er,volqe001,2'
+      ]
     ])
   })
 
@@ -21,6 +33,16 @@ describe('lib', () => {
       await parseFile('./not/a/file')
     } catch (e) {
       expect(e.message).toEqual('There was an error reading your file.')
+    }
+  })
+
+  it('handles invalid files', async () => {
+    try {
+      await parseFile('./tests/testfile3')
+    } catch (e) {
+      expect(e.message).toEqual(
+        'Invalid game data: Attempted to add game event without current game.'
+      )
     }
   })
 

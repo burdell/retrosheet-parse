@@ -55,6 +55,10 @@ export class GameBuilder {
     )
   }
 
+  receiveGame = (game: string[]) => {
+    game.forEach(this.receiveGameEvent)
+  }
+
   receiveGameEvent = (event: string) => {
     const eventArray = event.split(',')
     const eventType = eventArray[0]

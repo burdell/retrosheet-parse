@@ -1,9 +1,9 @@
-import { parseFile } from './lib/index'
+import { parseFileContent } from './lib/getGames'
 
 async function main() {
-  const result = await parseFile('./tests/testfile')
+  const result = await parseFileContent('./tests/testfile2')
 
-  console.log(result)
+  // console.log(result)
 }
 
 main()
