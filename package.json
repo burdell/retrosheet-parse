@@ -1,6 +1,6 @@
 {
   "name": "retrosheet-parse",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "",
   "scripts": {
     "test": "jest",
@@ -17,9 +17,12 @@
   ],
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
-  "keywords": [],
+  "keywords": [
+    "baseball",
+    "retrosheet"
+  ],
   "author": "nathan griffin <nathanjgriffin@gmail.com>",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@types/jest": "^25.1.4",
     "@types/node": "^13.9.4",

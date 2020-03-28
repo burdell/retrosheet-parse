@@ -8,8 +8,26 @@ retrosheet-parser is a library that parses [Retrosheet](https://www.retrosheet.o
 
 # Usage
 
+retrosheet-parse exposes 2 main functions. Both take a relative path your Retrosheet file and a set of optional options to generate an output file which are
+
+```ts
+export type FileOptions = {
+  outputPath?: string // where the generated file will be outputted
+  filename?: string // what to name that file (defaults to result.txt)
+}
+```
+
+If you don't provide the options, no file is generated
+
 ```ts
 const { parseFile, parseGames } = require('retrosheet-parse')
+
+const rawGames = await parseFile('./my/retrosheet/file')
+
+const formattedGames = await parseGames('./my/retrosheet/file', {
+  outputPath: './results',
+  filename: 'games.txt'
+})
 ```
 
 ## parseFile(pathtoFile, [options])
@@ -18,7 +36,7 @@ const { parseFile, parseGames } = require('retrosheet-parse')
 
 `options`: Optional options array (see below for availble option)
 
-Takes a standard Retrosheet file and returns a list of raw games files. For example this (very) truncated game file:
+Takes a standard Retrosheet file and returns a list of raw games files. For example this (very) truncated file:
 
 ```
 id,ANA201904040
@@ -72,7 +90,7 @@ will return an array with 2 game arrays in it:
 
 `options`: Optional options array (see below for availble option)
 
-Parses a Retrosheet file but returns a list of Game objects. Type definitions for returned data:
+Parses a Retrosheet file but returns a promise that resolves a list of Game objects. Type definitions for returned data:
 
 ```ts
 type Player = {

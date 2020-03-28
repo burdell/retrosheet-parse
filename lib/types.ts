@@ -73,6 +73,6 @@ export type Game = {
 }
 
 export type FileOptions = {
-  outputPath: string
+  outputPath?: string
   filename?: string
 }
