@@ -21,3 +21,5 @@ export async function parseFile(pathToFile: string, options?: FileOptions) {
 
   return content
 }
+
+export * from './types'

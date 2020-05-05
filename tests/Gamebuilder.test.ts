@@ -79,25 +79,29 @@ describe('Game Builder', () => {
       id: 'almoa002',
       name: 'Albert Almora',
       position: 8,
-      type: 'start'
+      type: 'start',
+      inningEntered: 1
     }
     const awayPlayer2 = {
       id: 'bryak001',
       name: 'Kris Bryant',
       position: 5,
-      type: 'start'
+      type: 'start',
+      inningEntered: 1
     }
     const homePlayer1 = {
       id: 'incie001',
       name: 'Ender Inciarte',
       position: 8,
-      type: 'start'
+      type: 'start',
+      inningEntered: 1
     }
     const homePlayer2 = {
       id: 'donaj001',
       name: 'Josh Donaldson',
       position: 5,
-      type: 'start'
+      type: 'start',
+      inningEntered: 1
     }
 
     gb.receiveGameEvent(
@@ -152,26 +156,30 @@ describe('Game Builder', () => {
       id: 'almoa002',
       name: 'Albert Almora',
       position: 5,
-      type: 'start'
+      type: 'start',
+      inningEntered: 1
     }
     const awaySubstitute = {
       id: 'bryak001',
       name: 'Kris Bryant',
       position: 5,
-      type: 'sub'
+      type: 'sub',
+      inningEntered: 1
     }
 
     const homeStarter = {
       id: 'newcs001',
       name: 'Sean Newcomb',
       position: 1,
-      type: 'start'
+      type: 'start',
+      inningEntered: 1
     }
     const homeSubstitute = {
       id: 'biddj001',
       name: 'Jesse Biddle',
       position: 1,
-      type: 'sub'
+      type: 'sub',
+      inningEntered: 1
     }
 
     const awaySubPosition = 5

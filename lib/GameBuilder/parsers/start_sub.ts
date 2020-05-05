@@ -1,7 +1,7 @@
 import { GameBuilder } from '../../GameBuilder'
 
 export function parseLineupEvent(gameBuilder: GameBuilder, event: string[]) {
-  const { lineup } = gameBuilder.getCurrentGame()
+  const { lineup, play } = gameBuilder.getCurrentGame()
 
   const [
     type,
@@ -12,7 +12,11 @@ export function parseLineupEvent(gameBuilder: GameBuilder, event: string[]) {
     fieldPosition
   ] = event
 
-  const lineupType = homeOrAway === '0' ? lineup.visiting : lineup.home
+  const isVisiting = homeOrAway === '0'
+  const lineupType = isVisiting ? lineup.visiting : lineup.home
+  const gameplay = isVisiting ? play.visiting : play.home
+  const currentInning = gameplay.length
+
   const playerType = type === 'start' ? 'start' : 'sub'
 
   const lineupIndex = Number(lineupPosition) - 1
@@ -22,6 +26,7 @@ export function parseLineupEvent(gameBuilder: GameBuilder, event: string[]) {
     id: playerId,
     name: playerName.replace(/['"]+/g, ''),
     position: Number(fieldPosition),
-    type: playerType
+    type: playerType,
+    inningEntered: playerType === 'start' ? 1 : currentInning
   })
 }

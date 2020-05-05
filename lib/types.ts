@@ -34,6 +34,7 @@ export type Player = {
   name: string
   position: number
   type: 'sub' | 'start'
+  inningEntered: number
 }
 
 export type Comment = {
