@@ -1,6 +1,6 @@
-# retrosheet-parser
+# retrosheet-parse
 
-retrosheet-parser is a library that parses [Retrosheet](https://www.retrosheet.org/) files.
+retrosheet-parse is a library that parses [Retrosheet](https://www.retrosheet.org/) files.
 
 # Installation
 

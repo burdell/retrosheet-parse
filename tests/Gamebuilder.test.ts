@@ -164,7 +164,7 @@ describe('Game Builder', () => {
       name: 'Kris Bryant',
       position: 5,
       type: 'sub',
-      inningEntered: 1
+      inningEntered: 0
     }
 
     const homeStarter = {
@@ -179,7 +179,7 @@ describe('Game Builder', () => {
       name: 'Jesse Biddle',
       position: 1,
       type: 'sub',
-      inningEntered: 1
+      inningEntered: 0
     }
 
     const awaySubPosition = 5

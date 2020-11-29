@@ -4,6 +4,7 @@
   "description": "",
   "scripts": {
     "test": "jest",
+    "coverage": "jest --coverage",
     "start": "ts-node dev.ts",
     "build": "tsc",
     "prepublish": "npm run test && npm run build"
