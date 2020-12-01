@@ -50,7 +50,13 @@ export type AtBat = {
   result: string
 }
 
-export type GameplayEvent = AtBat | Comment
+export type RunnerAdjustment = {
+  type: 'runner-adjustment'
+  playerId: string
+  base: number
+}
+
+export type GameplayEvent = AtBat | Comment | RunnerAdjustment
 
 export type Lineup = Player[][]
 

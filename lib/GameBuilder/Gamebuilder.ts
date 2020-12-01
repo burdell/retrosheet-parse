@@ -6,7 +6,8 @@ import {
   parseLineupEvent,
   parseVersion,
   parseData,
-  parsePlayEvent
+  parsePlayEvent,
+  parseRunnerAdjustment
 } from './parsers'
 import { getEmptyGame } from './getEmptyGame'
 
@@ -37,6 +38,9 @@ export class GameBuilder {
       }
       case 'play': {
         return parsePlayEvent
+      }
+      case 'radj': {
+        return parseRunnerAdjustment
       }
     }
   }

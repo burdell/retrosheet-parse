@@ -271,6 +271,59 @@ describe('Game Builder', () => {
     ])
   })
 
+  it('records runner adjustments', () => {
+    const gb = new GameBuilder()
+    gb.addGame()
+
+    gb.receiveGameEvent('start,dickc002,Corey Dickerson,0,1,7')
+    gb.receiveGameEvent('start,marts002,Starling Marte,0,2,8')
+    gb.receiveGameEvent('start,aguij001,Jesus Aguilar,0,3,3')
+    gb.receiveGameEvent('start,joycm001,Matt Joyce,0,4,9')
+    gb.receiveGameEvent('start,coopg002,Garrett Cooper,0,5,10')
+    gb.receiveGameEvent('start,bertj001,Jon Berti,0,6,5')
+    gb.receiveGameEvent('start,chisj001,Jazz Chisholm,0,7,4')
+    gb.receiveGameEvent('start,rojam002,Miguel Rojas,0,8,6')
+    gb.receiveGameEvent('start,alfaj002,Jorge Alfaro,0,9,2')
+    gb.receiveGameEvent('start,urenj001,Jose Urena,0,0,1')
+    gb.receiveGameEvent('start,acunr001,Ronald Acuna Jr.,1,1,9')
+    gb.receiveGameEvent('start,swand001,Dansby Swanson,1,2,6')
+    gb.receiveGameEvent('start,freef001,Freddie Freeman,1,3,3')
+    gb.receiveGameEvent('start,ozunm001,Marcell Ozuna,1,4,10')
+    gb.receiveGameEvent(`start,darnt001,Travis d'Arnaud,1,5,2`)
+    gb.receiveGameEvent('start,markn001,Nick Markakis,1,6,7')
+    gb.receiveGameEvent('start,rilea001,Austin Riley,1,7,5')
+    gb.receiveGameEvent('start,hecha001,Adeiny Hechavarria,1,8,4')
+    gb.receiveGameEvent('start,incie001,Ender Inciarte,1,9,8')
+    gb.receiveGameEvent('start,andei001,Ian Anderson,1,0,1')
+    gb.receiveGameEvent('play,1,0,dickc002,11,FBX,53/G56S-')
+    gb.receiveGameEvent('play,1,0,marts002,01,CX,8/F89')
+    gb.receiveGameEvent('play,1,0,aguij001,31,BCBBB,W')
+    gb.receiveGameEvent('play,1,0,joycm001,22,BCBSX,46(1)/FO/G4.B-1')
+    gb.receiveGameEvent('play,1,1,acunr001,31,BBBFB,W')
+    gb.receiveGameEvent('play,1,1,swand001,10,B1>B,SB2.1-3(E2/TH)')
+    gb.receiveGameEvent('play,1,1,swand001,31,B1>B.BFB,W')
+    gb.receiveGameEvent('play,1,1,freef001,10,BX,D8/L78XD+.3-H;1-H')
+    gb.receiveGameEvent('play,1,1,ozunm001,12,BCFS,K')
+    gb.receiveGameEvent('play,1,1,darnt001,00,2X,S7/G56.2-3')
+    gb.receiveGameEvent('play,1,1,markn001,30,BBBX,46(1)3/GDP/G4')
+    gb.receiveGameEvent('radj,coopg002,2')
+    gb.receiveGameEvent('radj,acunr001,2')
+
+    const visitingGameplay = gb.getCurrentGame().play.visiting
+    expect(visitingGameplay[visitingGameplay.length - 1][0]).toEqual({
+      base: 2,
+      playerId: 'coopg002',
+      type: 'runner-adjustment'
+    })
+
+    const homeGameplay = gb.getCurrentGame().play.home
+    expect(homeGameplay[homeGameplay.length - 1][0]).toEqual({
+      base: 2,
+      playerId: 'acunr001',
+      type: 'runner-adjustment'
+    })
+  })
+
   it('does nothing if it encounters an event it doesnt know about', () => {
     const gb = new GameBuilder()
     gb.addGame()
