@@ -306,18 +306,29 @@ describe('Game Builder', () => {
     gb.receiveGameEvent('play,1,1,ozunm001,12,BCFS,K')
     gb.receiveGameEvent('play,1,1,darnt001,00,2X,S7/G56.2-3')
     gb.receiveGameEvent('play,1,1,markn001,30,BBBX,46(1)3/GDP/G4')
-    gb.receiveGameEvent('radj,coopg002,2')
+    gb.receiveGameEvent('play,2,0,bertj001,00,.,NP')
+    gb.receiveGameEvent('sub,markn001,Nick Markakis,1,6,9')
+    gb.receiveGameEvent('play,2,0,bertj001,00,..,NP')
+    gb.receiveGameEvent('sub,duvaa001,Adam Duvall,1,9,7')
+    gb.receiveGameEvent('play,2,0,bertj001,00,...,NP')
+    gb.receiveGameEvent('sub,minta001,A.J. Minter,1,0,1')
     gb.receiveGameEvent('radj,acunr001,2')
+    gb.receiveGameEvent('radj,coopg002,2')
+    gb.receiveGameEvent('play,2,0,aguij001,31,BCBBB,W')
+    gb.receiveGameEvent('play,2,1,swand001,10,B1>B,SB2.1-3(E2/TH)')
 
+    // inning with subs
     const visitingGameplay = gb.getCurrentGame().play.visiting
-    expect(visitingGameplay[visitingGameplay.length - 1][0]).toEqual({
+    const inning = visitingGameplay[1]
+    expect(inning[inning.length - 2]).toEqual({
       base: 2,
       playerId: 'coopg002',
       type: 'runner-adjustment'
     })
 
+    //inning with no subs
     const homeGameplay = gb.getCurrentGame().play.home
-    expect(homeGameplay[homeGameplay.length - 1][0]).toEqual({
+    expect(homeGameplay[1][0]).toEqual({
       base: 2,
       playerId: 'acunr001',
       type: 'runner-adjustment'

@@ -1,4 +1,10 @@
-import { RunnerAdjustment, Game, Lineup } from '../../types'
+import {
+  RunnerAdjustment,
+  Game,
+  Lineup,
+  AtBat,
+  GameplayEvent
+} from '../../types'
 import { GameBuilder } from '..'
 
 export function parseRunnerAdjustment(
@@ -19,10 +25,13 @@ export function parseRunnerAdjustment(
 
   // this assumes 'runner adjustment' is the always the extra inning runner
   // meaning it's always the first thing in the next inning
-  const inningIndex = gameplay.length
-  if (!gameplay[inningIndex]) {
+  let inningIndex = gameplay.length - 1
+  const lastInning = gameplay[gameplay.length - 1]
+  if (lastInning.length !== 0 && inningHasAction(lastInning)) {
+    inningIndex += 1
     gameplay[inningIndex] = []
   }
+
   gameplay[inningIndex].push(runnerAdjustment)
 }
 
@@ -36,6 +45,10 @@ function getTeam(game: Game, playerId: string) {
   }
 
   throw new Error('Attempted a runner adjustment with an invalid player')
+}
+
+function inningHasAction(inning: GameplayEvent[]) {
+  return inning.some((i) => i.type === 'at-bat' && i.result !== 'NP')
 }
 
 function getLineupPlayers(lineup: Lineup) {
