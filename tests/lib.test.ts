@@ -48,6 +48,18 @@ const testFileJsonResults = {
       ]
     ]
   },
+  pitchers: {
+    home: [
+      {
+        id: 'harvm001',
+        name: 'Matt Harvey',
+        position: 1,
+        type: 'start',
+        inningEntered: 1
+      }
+    ],
+    visiting: []
+  },
   info: {
     visteam: 'TEX',
     hometeam: '',
