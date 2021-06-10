@@ -6,6 +6,7 @@ import {
   GameplayEvent
 } from '../../types'
 import { GameBuilder } from '..'
+import { inningHasAction } from '../utils'
 
 export function parseRunnerAdjustment(
   gameBuilder: GameBuilder,
@@ -45,10 +46,6 @@ function getTeam(game: Game, playerId: string) {
   }
 
   throw new Error('Attempted a runner adjustment with an invalid player')
-}
-
-function inningHasAction(inning: GameplayEvent[]) {
-  return inning.some((i) => i.type === 'at-bat' && i.result !== 'NP')
 }
 
 function getLineupPlayers(lineup: Lineup) {

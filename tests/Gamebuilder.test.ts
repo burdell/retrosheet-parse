@@ -341,4 +341,107 @@ describe('Game Builder', () => {
 
     gb.receiveGameEvent('lol,not,an,event')
   })
+
+  it('handles lineups & pitchers with a DH', () => {
+    const gb = new GameBuilder()
+    gb.addGame()
+    gb.receiveGameEvent('start,acunr001,"Ronald Acuna Jr.",0,1,9')
+    gb.receiveGameEvent('start,albio001,"Ozzie Albies",0,2,4')
+    gb.receiveGameEvent('start,sorom001,"Mike Soroka",0,0,1')
+    gb.receiveGameEvent('sub,duvaa001,"Adam Duvall",0,1,9')
+    gb.receiveGameEvent('sub,grees005,"Shane Greene",0,0,1')
+
+    const game = gb.getCurrentGame()
+    expect(game.lineup.visiting).toEqual([
+      [
+        {
+          id: 'acunr001',
+          name: 'Ronald Acuna Jr.',
+          position: 9,
+          type: 'start',
+          inningEntered: 1
+        },
+        {
+          id: 'duvaa001',
+          name: 'Adam Duvall',
+          position: 9,
+          type: 'sub',
+          inningEntered: 0
+        }
+      ],
+      [
+        {
+          id: 'albio001',
+          name: 'Ozzie Albies',
+          position: 4,
+          type: 'start',
+          inningEntered: 1
+        }
+      ]
+    ])
+    expect(game.pitchers.visiting).toEqual([
+      {
+        id: 'sorom001',
+        name: 'Mike Soroka',
+        position: 1,
+        type: 'start',
+        inningEntered: 1
+      },
+      {
+        id: 'grees005',
+        name: 'Shane Greene',
+        position: 1,
+        type: 'sub',
+        inningEntered: 0
+      }
+    ])
+  })
+
+  it('handles lineups & pitchers without a DH', () => {
+    const gb = new GameBuilder()
+    gb.addGame()
+    gb.receiveGameEvent('start,incie001,"Ender Inciarte",0,1,8')
+    gb.receiveGameEvent('start,donaj001,"Josh Donaldson",0,2,5')
+    gb.receiveGameEvent('start,tehej001,"Julio Teheran",0,3,1')
+
+    const game = gb.getCurrentGame()
+    expect(game.lineup.visiting).toEqual([
+      [
+        {
+          id: 'incie001',
+          name: 'Ender Inciarte',
+          position: 8,
+          type: 'start',
+          inningEntered: 1
+        }
+      ],
+      [
+        {
+          id: 'donaj001',
+          name: 'Josh Donaldson',
+          position: 5,
+          type: 'start',
+          inningEntered: 1
+        }
+      ],
+      [
+        {
+          id: 'tehej001',
+          name: 'Julio Teheran',
+          position: 1,
+          type: 'start',
+          inningEntered: 1
+        }
+      ]
+    ])
+    expect(game.pitchers.visiting).toEqual([
+      {
+        id: 'tehej001',
+        name: 'Julio Teheran',
+        position: 1,
+        type: 'start',
+        inningEntered: 1
+      }
+    ])
+  })
 })

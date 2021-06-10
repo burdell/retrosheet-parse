@@ -1,7 +1,7 @@
 import { GameBuilder } from '../../GameBuilder'
 
 export function parseLineupEvent(gameBuilder: GameBuilder, event: string[]) {
-  const { lineup, play } = gameBuilder.getCurrentGame()
+  const { lineup, play, pitchers } = gameBuilder.getCurrentGame()
 
   const [
     type,
@@ -13,20 +13,32 @@ export function parseLineupEvent(gameBuilder: GameBuilder, event: string[]) {
   ] = event
 
   const isVisiting = homeOrAway === '0'
-  const lineupType = isVisiting ? lineup.visiting : lineup.home
   const gameplay = isVisiting ? play.visiting : play.home
   const currentInning = gameplay.length
 
-  const playerType = type === 'start' ? 'start' : 'sub'
+  const playerType: 'start' | 'sub' = type === 'start' ? 'start' : 'sub'
 
   const lineupIndex = Number(lineupPosition) - 1
-  if (!lineupType[lineupIndex]) lineupType[lineupIndex] = []
 
-  lineupType[lineupIndex].push({
+  const player = {
     id: playerId,
-    name: playerName.replace(/['"]+/g, ''),
+    name: playerName.replace(/["]+/g, ''),
     position: Number(fieldPosition),
     type: playerType,
     inningEntered: playerType === 'start' ? 1 : currentInning
-  })
+  }
+  const isHitter = lineupIndex >= 0
+  const isPitcher = player.position === 1
+
+  if (isHitter) {
+    const lineupType = isVisiting ? lineup.visiting : lineup.home
+    if (!lineupType[lineupIndex]) lineupType[lineupIndex] = []
+
+    lineupType[lineupIndex].push(player)
+  }
+
+  if (isPitcher) {
+    const pitcherType = isVisiting ? pitchers.visiting : pitchers.home
+    pitcherType.push(player)
+  }
 }

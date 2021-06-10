@@ -13,7 +13,7 @@ export async function parseFileContent(filePath: string) {
     })
 
     const games: string[][] = []
-    rawContent.split('\n').forEach(line => {
+    rawContent.split('\n').forEach((line) => {
       if (!line) return
 
       const [action] = line.split(',')

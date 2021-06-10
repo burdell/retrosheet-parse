@@ -8,6 +8,10 @@ export function getEmptyGame(initial: Partial<Game>): Game {
       home: [],
       visiting: []
     },
+    pitchers: {
+      home: [],
+      visiting: []
+    },
     info: {
       visteam: '',
       hometeam: '',

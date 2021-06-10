@@ -68,6 +68,10 @@ export type Game = {
     home: Lineup
     visiting: Lineup
   }
+  pitchers: {
+    home: Player[]
+    visiting: Player[]
+  }
   data: {
     er: {
       [playerId: string]: number
