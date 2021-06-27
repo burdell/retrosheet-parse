@@ -1,4 +1,4 @@
-import { Game } from '../types'
+import { Game, GameMetaData } from '../types'
 
 import {
   parseNewGame,
@@ -13,9 +13,11 @@ import { getEmptyGame } from './getEmptyGame'
 
 export class GameBuilder {
   private games: Game[]
+  private currentGameMetaData: GameMetaData | undefined
 
   constructor() {
     this.games = []
+    this.currentGameMetaData = undefined
   }
 
   getParser = (key: string) => {
@@ -50,13 +52,30 @@ export class GameBuilder {
   }
 
   getCurrentGame = () => {
-    return this.games[this.games.length - 1]
+    const currentGame = this.currentGameMetaData?.game
+    if (!currentGame) throw new Error('No current game set')
+
+    return currentGame
+  }
+
+  getCurrentGameMetaData = () => {
+    const metaData = this.currentGameMetaData
+    if (!metaData) {
+      throw new Error('No current meta data set')
+    }
+
+    return metaData
   }
 
   addGame = (game?: Game) => {
-    this.games.push(
-      game ? game : getEmptyGame({ id: (this.games.length + 1).toString() })
-    )
+    const currentGame =
+      game ?? getEmptyGame({ id: (this.games.length + 1).toString() })
+    this.games.push(currentGame)
+    this.currentGameMetaData = {
+      game: currentGame,
+      currentInning: 0,
+      subCache: []
+    }
   }
 
   receiveGame = (game: string[]) => {

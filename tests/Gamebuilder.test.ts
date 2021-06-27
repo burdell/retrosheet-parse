@@ -116,6 +116,7 @@ describe('Game Builder', () => {
     gb.receiveGameEvent(
       `start,${homePlayer2.id},"${homePlayer2.name}",1,2,${homePlayer2.position}`
     )
+    gb.receiveGameEvent(`play,1,0,${homePlayer1.id},01,CX,7/F7LS`)
 
     const { lineup } = gb.getCurrentGame()
 
@@ -164,7 +165,7 @@ describe('Game Builder', () => {
       name: 'Kris Bryant',
       position: 5,
       type: 'sub',
-      inningEntered: 0
+      inningEntered: 1
     }
 
     const homeStarter = {
@@ -179,7 +180,7 @@ describe('Game Builder', () => {
       name: 'Jesse Biddle',
       position: 1,
       type: 'sub',
-      inningEntered: 0
+      inningEntered: 1
     }
 
     const awaySubPosition = 5
@@ -197,6 +198,7 @@ describe('Game Builder', () => {
     gb.receiveGameEvent(
       `sub,${homeSubstitute.id},"${homeSubstitute.name}",1,${homeSubPosition},${homeSubstitute.position}`
     )
+    gb.receiveGameEvent(`play,1,0,${awaySubstitute.id},01,CX,7/F7LS`)
 
     const { lineup } = gb.getCurrentGame()
 
@@ -350,6 +352,7 @@ describe('Game Builder', () => {
     gb.receiveGameEvent('start,sorom001,"Mike Soroka",0,0,1')
     gb.receiveGameEvent('sub,duvaa001,"Adam Duvall",0,1,9')
     gb.receiveGameEvent('sub,grees005,"Shane Greene",0,0,1')
+    gb.receiveGameEvent(`play,1,0,duvaa001,01,CX,7/F7LS`)
 
     const game = gb.getCurrentGame()
     expect(game.lineup.visiting).toEqual([
@@ -366,7 +369,7 @@ describe('Game Builder', () => {
           name: 'Adam Duvall',
           position: 9,
           type: 'sub',
-          inningEntered: 0
+          inningEntered: 1
         }
       ],
       [
@@ -392,7 +395,7 @@ describe('Game Builder', () => {
         name: 'Shane Greene',
         position: 1,
         type: 'sub',
-        inningEntered: 0
+        inningEntered: 1
       }
     ])
   })
@@ -443,5 +446,21 @@ describe('Game Builder', () => {
         inningEntered: 1
       }
     ])
+  })
+
+  it('sets the correct inning for a substituion', () => {
+    const gb = new GameBuilder()
+    gb.addGame()
+
+    gb.receiveGameEvent('start,acunr001,"Ronald Acuna Jr.",0,1,9')
+    gb.receiveGameEvent('start,albio001,"Ozzie Albies",0,2,4')
+    gb.receiveGameEvent('start,sorom001,"Mike Soroka",0,0,1')
+    gb.receiveGameEvent('play,1,0,acunr001,12,CSBC,K')
+    gb.receiveGameEvent('play,1,0,albio001,12,BSCX,23/G-')
+    gb.receiveGameEvent('play,1,0,sorom001,10,BX,13/G')
+    gb.receiveGameEvent('sub,carls002,"Shane Carle",0,1,1')
+    gb.receiveGameEvent('play,2,0,acunr001,10,BX,13/G')
+
+    expect(gb.getCurrentGame().lineup.visiting[0][1].inningEntered).toEqual(2)
   })
 })

@@ -87,3 +87,22 @@ export type FileOptions = {
   outputPath?: string
   filename?: string
 }
+
+export type CacheItem =
+  | {
+      playerType: 'hitter'
+      lineupIndex: number
+      player: Player
+      teamType: 'home' | 'visiting'
+    }
+  | {
+      playerType: 'pitcher'
+      player: Player
+      teamType: 'home' | 'visiting'
+    }
+
+export type GameMetaData = {
+  game: Game
+  currentInning: number
+  subCache: CacheItem[]
+}
