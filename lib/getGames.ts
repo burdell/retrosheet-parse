@@ -36,9 +36,10 @@ export async function parseFileContent(filePath: string) {
 
     return games
   } catch (e) {
+    const error = e as Error
     throw new Error(
-      e.name === 'InvalidData'
-        ? e.message
+      error.name === 'InvalidData'
+        ? error.message
         : 'There was an error reading your file.'
     )
   }

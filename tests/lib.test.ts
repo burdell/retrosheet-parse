@@ -162,16 +162,18 @@ describe('lib', () => {
   it('handles file errors', async () => {
     try {
       await parseFile('./not/a/file')
-    } catch (e) {
-      expect(e.message).toEqual('There was an error reading your file.')
+    } catch (e: unknown) {
+      const error = e as Error
+      expect(error.message).toEqual('There was an error reading your file.')
     }
   })
 
   it('handles invalid files', async () => {
     try {
       await parseFile('./tests/testfile3')
-    } catch (e) {
-      expect(e.message).toEqual(
+    } catch (e: unknown) {
+      const error = e as Error
+      expect(error.message).toEqual(
         'Invalid game data: Attempted to add game event without current game.'
       )
     }
